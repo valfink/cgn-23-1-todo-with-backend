@@ -96,4 +96,33 @@ class TodoControllerTest {
 
         // THEN
     }
+
+    @Test
+    @DirtiesContext
+    void updateTodoItem() throws Exception {
+        // GIVEN
+        todoItemRepo.addTodoItem(todo1_withID);
+        todoItemRepo.addTodoItem(todo2_withID);
+
+        // WHEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/todo/" + todo1_withID.id())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                            {
+                                "id": "123",
+                                "description": "My first item EDITED",
+                                "status": "DOING"
+                            }
+                            """))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                            "id": "123",
+                            "description": "My first item EDITED",
+                            "status": "DOING"
+                        }
+                        """));
+
+        // THEN
+    }
 }
