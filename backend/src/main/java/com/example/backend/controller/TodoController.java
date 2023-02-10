@@ -32,4 +32,9 @@ public class TodoController {
     public TodoItem updateTodoItem(@PathVariable String id, @RequestBody TodoItem todoItem) {
         return todoService.updateTodoItem(id, todoItem);
     }
+
+    @DeleteMapping("todo/{id}")
+    public TodoItem deleteTodoItem(@PathVariable String id) {
+        return todoService.deleteTodoItemById(id);
+    }
 }

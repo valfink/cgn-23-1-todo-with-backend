@@ -74,4 +74,10 @@ class TodoServiceTest {
         // THEN
         verify(todoItemRepo).getTodoItemById("1");
     }
+
+    @Test
+    void deleteTodoItem_idNotFound() {
+        // WHEN
+        assertThrows(NoSuchElementException.class, () -> todoService.deleteTodoItemById("1"));
+    }
 }

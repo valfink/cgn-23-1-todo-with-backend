@@ -28,10 +28,17 @@ public class TodoService {
     }
 
     public TodoItem updateTodoItem(String id, TodoItem todoItem) {
+        // Check if item exists, else throw Exception
         getTodoItemById(id);
         if (!id.equals(todoItem.id())) {
             throw new SecurityException("The provided IDs don't match (" + id + " in path, " + todoItem.id() + " in Item).");
         }
         return todoItemRepo.addTodoItem(todoItem);
+    }
+
+    public TodoItem deleteTodoItemById(String id) {
+        // Check if item exists, else throw Exception
+        getTodoItemById(id);
+        return todoItemRepo.deleteTodoItemById(id);
     }
 }

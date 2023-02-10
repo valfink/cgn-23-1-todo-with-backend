@@ -111,7 +111,7 @@ class TodoControllerTest {
                             {
                                 "id": "123",
                                 "description": "My first item EDITED",
-                                "status": "DOING"
+                                "status": "IN_PROGRESS"
                             }
                             """))
                 .andExpect(status().isOk())
@@ -119,7 +119,28 @@ class TodoControllerTest {
                         {
                             "id": "123",
                             "description": "My first item EDITED",
-                            "status": "DOING"
+                            "status": "IN_PROGRESS"
+                        }
+                        """));
+
+        // THEN
+    }
+
+    @Test
+    @DirtiesContext
+    void deleteTodoItem() throws Exception {
+        // GIVEN
+        todoItemRepo.addTodoItem(todo1_withID);
+        todoItemRepo.addTodoItem(todo2_withID);
+
+        // WHEN
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/todo/" + todo1_withID.id()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                            "id": "123",
+                            "description": "My first item",
+                            "status": "OPEN"
                         }
                         """));
 

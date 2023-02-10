@@ -26,4 +26,8 @@ public class TodoItemRepo {
         return Optional.ofNullable(todoItemMap.get(id));
     }
 
+    public TodoItem deleteTodoItemById(String id) {
+        return todoItemMap.remove(id);
+    }
+
 }
