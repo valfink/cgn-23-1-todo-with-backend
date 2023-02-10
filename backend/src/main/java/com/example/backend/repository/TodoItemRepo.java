@@ -4,6 +4,7 @@ import com.example.backend.model.TodoItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -14,5 +15,9 @@ public class TodoItemRepo {
     public TodoItem addTodoItem(TodoItem todoItem) {
         todoItemMap.put(todoItem.id(), todoItem);
         return todoItem;
+    }
+
+    public List<TodoItem> listTodoItems() {
+        return todoItemMap.values().stream().toList();
     }
 }

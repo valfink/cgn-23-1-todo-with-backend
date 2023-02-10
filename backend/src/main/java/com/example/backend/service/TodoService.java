@@ -5,6 +5,8 @@ import com.example.backend.repository.TodoItemRepo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TodoService {
@@ -14,5 +16,9 @@ public class TodoService {
     public TodoItem addTodoItem(TodoItem todoItemWithoutID) {
         TodoItem todoItem = new TodoItem(idService.generateID(), todoItemWithoutID.description(), todoItemWithoutID.status());
         return todoItemRepo.addTodoItem(todoItem);
+    }
+
+    public List<TodoItem> listTodoItems() {
+        return todoItemRepo.listTodoItems();
     }
 }
