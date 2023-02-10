@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,6 +31,27 @@ class TodoItemRepoTest {
 
         // WHEN
         TodoItem actual = todoItemRepo.addTodoItem(todo2);
+
+        // THEN
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void getItemById_notPresent() {
+        // WHEN
+        Optional<TodoItem> actual = todoItemRepo.getTodoItemById("Blub");
+
+        // THEN
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    void getItemById_present() {
+        // GIVEN
+        TodoItem expected = todo1;
+
+        // WHEN
+        TodoItem actual = todoItemRepo.getTodoItemById(todo1.id()).orElse(null);
 
         // THEN
         assertEquals(expected, actual);

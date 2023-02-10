@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -56,8 +56,6 @@ class TodoControllerTest {
         todoItemRepo.addTodoItem(todo2_withID);
 
         // WHEN
-//        todo1_withID = new TodoItem("123", "My first item", TodoStatus.OPEN);
-//        todo2_withID = new TodoItem("234", "My second item", TodoStatus.OPEN);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/todo"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
@@ -73,6 +71,27 @@ class TodoControllerTest {
                                 "status": "OPEN"
                             }
                         ]
+                        """));
+
+        // THEN
+    }
+
+    @Test
+    @DirtiesContext
+    void getTodoItemById() throws Exception {
+        // GIVEN
+        todoItemRepo.addTodoItem(todo1_withID);
+        todoItemRepo.addTodoItem(todo2_withID);
+
+        // WHEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/todo/" + todo1_withID.id()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                        {
+                            "id": "123",
+                            "description": "My first item",
+                            "status": "OPEN"
+                        }
                         """));
 
         // THEN

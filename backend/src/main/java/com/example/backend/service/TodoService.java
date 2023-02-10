@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -20,5 +21,9 @@ public class TodoService {
 
     public List<TodoItem> listTodoItems() {
         return todoItemRepo.listTodoItems();
+    }
+
+    public TodoItem getTodoItemById(String id) {
+        return todoItemRepo.getTodoItemById(id).orElseThrow(NoSuchElementException::new);
     }
 }

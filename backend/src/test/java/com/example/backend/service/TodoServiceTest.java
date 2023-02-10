@@ -6,6 +6,9 @@ import com.example.backend.repository.TodoItemRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -40,5 +43,17 @@ class TodoServiceTest {
         verify(idService).generateID();
         verify(todoItemRepo).addTodoItem(todo1_withID);
         assertEquals(expected, actual);
+    }
+
+    @Test
+    void getTodoItemById_notPresent() {
+        // GIVEN
+        when(todoItemRepo.getTodoItemById("1")).thenReturn(Optional.empty());
+
+        // WHEN
+        assertThrows(NoSuchElementException.class, () -> todoService.getTodoItemById("1"));
+
+        // THEN
+        verify(todoItemRepo).getTodoItemById("1");
     }
 }

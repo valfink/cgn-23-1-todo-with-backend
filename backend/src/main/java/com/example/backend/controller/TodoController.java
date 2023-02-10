@@ -22,4 +22,9 @@ public class TodoController {
     public List<TodoItem> listTodoItems() {
         return todoService.listTodoItems();
     }
+
+    @GetMapping("todo/{id}")
+    public TodoItem getTodoItemById(@PathVariable String id) {
+        return todoService.getTodoItemById(id);
+    }
 }

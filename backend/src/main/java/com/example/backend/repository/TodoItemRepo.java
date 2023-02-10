@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -19,5 +20,9 @@ public class TodoItemRepo {
 
     public List<TodoItem> listTodoItems() {
         return todoItemMap.values().stream().toList();
+    }
+
+    public Optional<TodoItem> getTodoItemById(String id) {
+        return Optional.ofNullable(todoItemMap.get(id));
     }
 }
