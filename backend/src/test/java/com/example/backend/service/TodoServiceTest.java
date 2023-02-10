@@ -56,4 +56,22 @@ class TodoServiceTest {
         // THEN
         verify(todoItemRepo).getTodoItemById("1");
     }
+
+    @Test
+    void updateTodoItem_idNotFound() {
+        // WHEN
+        assertThrows(NoSuchElementException.class, () -> todoService.updateTodoItem("1", todo1_withID));
+    }
+
+    @Test
+    void updateTodoItem_idsNotMatching() {
+        // GIVEN
+        when(todoItemRepo.getTodoItemById("1")).thenReturn(Optional.of(todo1_withID));
+
+        // WHEN
+        assertThrows(SecurityException.class, () -> todoService.updateTodoItem("1", todo1_withID));
+
+        // THEN
+        verify(todoItemRepo).getTodoItemById("1");
+    }
 }

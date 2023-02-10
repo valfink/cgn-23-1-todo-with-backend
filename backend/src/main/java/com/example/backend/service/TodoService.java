@@ -26,4 +26,12 @@ public class TodoService {
     public TodoItem getTodoItemById(String id) {
         return todoItemRepo.getTodoItemById(id).orElseThrow(NoSuchElementException::new);
     }
+
+    public TodoItem updateTodoItem(String id, TodoItem todoItem) {
+        getTodoItemById(id);
+        if (!id.equals(todoItem.id())) {
+            throw new SecurityException("The provided IDs don't match (" + id + " in path, " + todoItem.id() + " in Item).");
+        }
+        return todoItemRepo.addTodoItem(todoItem);
+    }
 }
