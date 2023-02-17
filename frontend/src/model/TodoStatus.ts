@@ -11,7 +11,7 @@ export const todoStatus = {
         hasNexStatus: true,
         nextStatus: "DONE"
     },
-     "DONE": {
+    "DONE": {
         displayText: "Done",
         jsonValue: "DONE",
         hasNexStatus: false,
@@ -19,5 +19,11 @@ export const todoStatus = {
     }
 } as const
 
-
-export type SingleStatus = typeof todoStatus["OPEN" | "IN_PROGRESS" | "DONE"]
+export type ServerStatus = "OPEN" | "IN_PROGRESS" | "DONE";
+// export type SingleStatus = {
+//     displayText: string,
+//     jsonValue: ServerStatus,
+//     hasNextStatus: boolean,
+//     nextStatus: ServerStatus
+// }
+export type SingleStatus = typeof todoStatus[ServerStatus]

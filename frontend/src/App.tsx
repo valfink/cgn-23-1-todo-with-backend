@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import Header from "./component/Header";
 import FilterBar from "./component/FilterBar";
-import {todoStatus} from "./model/TodoStatus";
+import {ServerStatus, todoStatus} from "./model/TodoStatus";
 import TodoBoard from "./component/TodoBoard";
 import {TodoItem} from "./model/TodoItem";
 import AddItemBar from "./component/AddItemBar";
@@ -10,6 +10,7 @@ import axios from "axios";
 
 function App() {
     const [items, setItems] = useState<TodoItem[]>([]);
+    const [boardFilter, setBoardFilter] = useState<ServerStatus | undefined>(undefined);
 
     function fetchItems() {
         console.log("Fetching items...");
@@ -51,18 +52,21 @@ function App() {
     }
 
     // static mock props, will eventually become state!
-    const filterButtons = [
-        {value: "All", isSelected: true},
-        {value: "New", isSelected: false},
-        {value: "Doing", isSelected: false},
-        {value: "Done", isSelected: false},
-    ];
+    const filterButtons: {value: string, filterValue: ServerStatus | undefined}[] = Object.values(todoStatus)
+        .map(status => ({
+            value: status.displayText,
+            filterValue: status.jsonValue
+        }));
+    filterButtons.unshift({value: "All", filterValue: undefined})
+
     // static props
-    const todoBoards = Object.values(todoStatus).map(status => <TodoBoard
-        boardName={status.displayText}
-        items={items.filter(item => item.status === status.jsonValue)}
-        advanceOrDeleteItem={advanceOrDeleteItem}
-    />)
+    const todoBoards = Object.values(todoStatus)
+        .filter(status => boardFilter ? status.jsonValue === boardFilter : true)
+        .map(status => <TodoBoard
+            boardName={status.displayText}
+            items={items.filter(item => item.status === status.jsonValue)}
+            advanceOrDeleteItem={advanceOrDeleteItem}
+        />)
 
     useEffect(fetchItems, []);
 
@@ -72,6 +76,8 @@ function App() {
             <main>
                 <FilterBar
                     buttons={filterButtons}
+                    currenFilter={boardFilter}
+                    changeFilter={setBoardFilter}
                 />
                 <section className={"board-container"}>
                     {todoBoards}
