@@ -7,9 +7,14 @@
 .todo-item h3 {
     margin: 2px 0 5px 0;
 }
-.todo-item .edit-links {
+.todo-item .edit-buttons {
     font-size: small;
     margin: 2px 0;
+}
+.todo-item .edit-buttons button {
+    font-size: small;
+    background-color: ghostwhite;
+    border: 1px solid ghostwhite;
 }
 .todo-item .advance {
     width: 50%;

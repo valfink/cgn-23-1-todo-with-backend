@@ -1,0 +1,22 @@
+.details-edit-modal {
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.details-edit-modal.hide {
+    display: none;
+}
+.details-edit-modal .modal-content {
+    width: 50%;
+    height: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -25% 0 0 -25%;
+    background-color: rgba(255,255,255,0.9);
+    border: 1px solid black;
+    border-radius: 15px;
+ }
