@@ -5,6 +5,7 @@ import FilterBar from "./component/FilterBar";
 import {todoStatus} from "./model/TodoStatus";
 import TodoBoard from "./component/TodoBoard";
 import {TodoItem} from "./model/TodoItem";
+import AddItemBar from "./component/AddItemBar";
 
 function App() {
 
@@ -24,7 +25,7 @@ function App() {
         {
             "id": "b",
             "description": "Zweite item",
-            "status": "IN_PROGRESS"
+            "status": "OPEN"
         },
         {
             "id": "c",
@@ -45,7 +46,10 @@ function App() {
                 <FilterBar
                     buttons={filterButtons}
                 />
-                {todoBoards}
+                <section className={"board-container"}>
+                    {todoBoards}
+                </section>
+                <AddItemBar />
             </main>
         </div>
     );

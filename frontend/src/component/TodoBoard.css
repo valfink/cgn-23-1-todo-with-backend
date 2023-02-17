@@ -1,0 +1,13 @@
+.todo-board {
+    border: 1px solid black;
+    flex-grow: 1;
+    width: 300px;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 10px;
+}
+.todo-board h2 {
+    margin: 0;
+}

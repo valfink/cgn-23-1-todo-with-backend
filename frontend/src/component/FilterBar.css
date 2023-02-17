@@ -1,17 +1,18 @@
 .filter-bar {
+    padding: 10px 0;
     display: flex;
     flex-flow: row nowrap;
     gap: 10px;
     justify-content: center;
 }
 .filter-bar button {
-    background-color: #ced4da;
+    background-color: rgba(206, 212, 218, 0.3);
     border: 1px solid #495057;
-    border-radius: 15%;
+    border-radius: 10px;
     width: 50px;
 }
 .filter-bar .selected {
-    background-color: #82c91e;
+    background-color: rgba(130, 201, 30, 0.3);
     border-color: #087f5b;
     color: #087f5b;
 
