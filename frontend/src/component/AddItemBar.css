@@ -3,12 +3,14 @@
     border: 1px solid black;
     border-radius: 5px;
     padding: 5px;
+}
+.add-item-bar form {
     display: flex;
     gap: 10px;
 }
-.add-item-bar input {
+.add-item-bar form input {
     flex-grow: 75;
 }
-.add-item-bar button {
+.add-item-bar form button {
     flex-grow: 25;
 }

@@ -4,11 +4,12 @@ import "./TodoBoard.css";
 
 type TodoBoardProps = {
     boardName: string,
-    items: TodoItem[]
+    items: TodoItem[],
+    advanceOrDeleteItem(item: TodoItem): void
 }
 
 export default function TodoBoard(props: TodoBoardProps) {
-    const todoItems = props.items.map(i => <SingleTodoItem item={i} />)
+    const todoItems = props.items.map(i => <SingleTodoItem item={i} advanceOrDeleteItem={props.advanceOrDeleteItem} />)
     return (
         <section className={"todo-board"}>
             <h2>{props.boardName}</h2>
