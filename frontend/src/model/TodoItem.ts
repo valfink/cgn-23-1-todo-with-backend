@@ -1,7 +1,7 @@
-import {SingleStatus} from "./TodoStatus";
+import {ServerStatus} from "./TodoStatus";
 
 export type TodoItem = {
     id?: string,
     description: string,
-    status: SingleStatus["jsonValue"]
+    status: ServerStatus
 }

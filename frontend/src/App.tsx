@@ -68,6 +68,12 @@ function App() {
         setSelectedItem(undefined);
     }
 
+    function updateItem(item: TodoItem) {
+        axios.put("/api/todo/" + item.id, item)
+            .then(fetchItems)
+            .catch(e => console.error(e));
+    }
+
     // static mock props, will eventually become state!
     const filterButtons: { value: string, filterValue: ServerStatus | undefined }[] = Object.values(todoStatus)
         .map(status => ({
@@ -92,8 +98,12 @@ function App() {
         <div className="App">
             <Header/>
             <main>
-                (selectedItem !== undefined &&
-                <DetailsEditModal item={selectedItem} action={modalAction} closeModal={closeModal}/>)
+                {selectedItem &&
+                    <DetailsEditModal
+                        item={selectedItem}
+                        action={modalAction}
+                        closeModal={closeModal}
+                        updateItem={updateItem} />}
                 <FilterBar
                     buttons={filterButtons}
                     currenFilter={boardFilter}
