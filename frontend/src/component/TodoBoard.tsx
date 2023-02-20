@@ -1,5 +1,5 @@
 import {TodoItem} from "../model/TodoItem";
-import SingleTodoItem from "./SingleTodoItem";
+import TodoCard from "./TodoCard";
 import "./TodoBoard.css";
 
 type TodoBoardProps = {
@@ -12,7 +12,7 @@ type TodoBoardProps = {
 
 export default function TodoBoard(props: TodoBoardProps) {
     const todoItems = props.items
-        .map(i => <SingleTodoItem
+        .map(i => <TodoCard
             item={i}
             advanceOrDeleteItem={props.advanceOrDeleteItem}
             setEditItem={props.setEditItem}

@@ -1,15 +1,15 @@
 import {TodoItem} from "../model/TodoItem";
-import "./SingleTodoItem.css";
+import "./TodoCard.css";
 import {todoStatus} from "../model/TodoStatus";
 
-type SingleTodoItemProps = {
+type TodoCardProps = {
     item: TodoItem,
     advanceOrDeleteItem(item: TodoItem): void,
     setViewItemDetails(item: TodoItem): void,
     setEditItem(item: TodoItem): void
 }
 
-export default function SingleTodoItem(props: SingleTodoItemProps) {
+export default function TodoCard(props: TodoCardProps) {
     function handleAdvanceButtonClick() {
         props.advanceOrDeleteItem(props.item);
     }

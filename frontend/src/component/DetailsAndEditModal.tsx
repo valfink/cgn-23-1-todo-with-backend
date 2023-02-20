@@ -3,7 +3,7 @@ import "./DetailsEditModal.css";
 import {ChangeEvent, FormEvent, useState} from "react";
 import {ServerStatus, todoStatus} from "../model/TodoStatus";
 
-type DetailsEditModalProps = {
+type DetailsAndEditModalProps = {
     // FIXME: Cannot leave out the "undefined"
     item: TodoItem | undefined,
     action: "edit" | "details",
@@ -11,7 +11,7 @@ type DetailsEditModalProps = {
     updateItem(item: TodoItem): void;
 }
 
-export default function DetailsEditModal(props: DetailsEditModalProps) {
+export default function DetailsAndEditModal(props: DetailsAndEditModalProps) {
     const [newDescription, setNewDescription] = useState(props.item?.description);
     const [newStatus, setNewStatus] = useState(props.item?.status);
 

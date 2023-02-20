@@ -7,7 +7,7 @@ import TodoBoard from "./component/TodoBoard";
 import {TodoItem} from "./model/TodoItem";
 import AddItemBar from "./component/AddItemBar";
 import axios from "axios";
-import DetailsEditModal from "./component/DetailsEditModal";
+import DetailsAndEditModal from "./component/DetailsAndEditModal";
 
 function App() {
     const [items, setItems] = useState<TodoItem[]>([]);
@@ -99,7 +99,7 @@ function App() {
             <Header/>
             <main>
                 {selectedItem &&
-                    <DetailsEditModal
+                    <DetailsAndEditModal
                         item={selectedItem}
                         action={modalAction}
                         closeModal={closeModal}
