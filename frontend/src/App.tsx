@@ -35,13 +35,15 @@ function App() {
     function advanceOrDeleteItem(item: TodoItem) {
         if (todoStatus[item.status].hasNexStatus) {
             const advancedItem: TodoItem = {
-                id: item.id,
-                description: item.description,
+                ...item,
                 status: todoStatus[item.status].nextStatus
             }
             console.log("Advancing item...");
             axios.put("/api/todo/" + item.id, advancedItem)
-                .then(fetchItems)
+                .then(response => setItems(prevState =>
+                    prevState.map(oldItem =>
+                        oldItem.id === item.id ? response.data : oldItem)))
+                // .then(fetchItems)
                 .catch(console.error);
         } else {
             console.log("Deleting item...");
