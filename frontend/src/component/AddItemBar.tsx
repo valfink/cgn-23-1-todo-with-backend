@@ -1,8 +1,9 @@
 import "./AddItemBar.css";
 import {ChangeEvent, FormEvent, useState} from "react";
+import {NewTodoItem} from "../model/TodoItem";
 
 type AddItemBarProps = {
-    newItemHandler(description: string): void
+    onSubmit: (item: NewTodoItem) => void
 }
 
 export default function AddItemBar(props: AddItemBarProps) {
@@ -14,7 +15,11 @@ export default function AddItemBar(props: AddItemBarProps) {
 
     function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        props.newItemHandler(description);
+        const item: NewTodoItem = {
+            description: description,
+            status: "OPEN"
+        }
+        props.onSubmit(item);
         setDescription("");
     }
 

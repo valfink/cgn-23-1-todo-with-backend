@@ -5,3 +5,5 @@ export type TodoItem = {
     description: string,
     status: ServerStatus
 }
+
+export type NewTodoItem = Omit<TodoItem, "id">

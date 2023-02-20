@@ -4,7 +4,7 @@ import Header from "./component/Header";
 import FilterBar from "./component/FilterBar";
 import {ServerStatus, todoStatus} from "./model/TodoStatus";
 import TodoBoard from "./component/TodoBoard";
-import {TodoItem} from "./model/TodoItem";
+import {NewTodoItem, TodoItem} from "./model/TodoItem";
 import AddItemBar from "./component/AddItemBar";
 import axios from "axios";
 import DetailsAndEditModal from "./component/DetailsAndEditModal";
@@ -21,18 +21,14 @@ function App() {
             .then(response => {
                 setItems(response.data);
             })
-            .catch(e => console.error(e));
+            .catch(console.error);
     }
 
-    function postNewItem(itemDescription: string) {
-        const item: TodoItem = {
-            description: itemDescription,
-            status: "OPEN"
-        }
+    function postNewItem(item: NewTodoItem) {
         console.log("Posting new item...");
         axios.post("/api/todo", item)
             .then(fetchItems)
-            .catch(e => console.error(e));
+            .catch(console.error);
     }
 
     function advanceOrDeleteItem(item: TodoItem) {
@@ -45,12 +41,12 @@ function App() {
             console.log("Advancing item...");
             axios.put("/api/todo/" + item.id, advancedItem)
                 .then(fetchItems)
-                .catch(e => console.error(e));
+                .catch(console.error);
         } else {
             console.log("Deleting item...");
             axios.delete("/api/todo/" + item.id)
                 .then(fetchItems)
-                .catch(e => console.error(e));
+                .catch(console.error);
         }
     }
 
@@ -71,7 +67,7 @@ function App() {
     function updateItem(item: TodoItem) {
         axios.put("/api/todo/" + item.id, item)
             .then(fetchItems)
-            .catch(e => console.error(e));
+            .catch(console.error);
     }
 
     // static mock props, will eventually become state!
@@ -114,7 +110,7 @@ function App() {
                     {todoBoards}
                 </section>
                 <AddItemBar
-                    newItemHandler={postNewItem}
+                    onSubmit={postNewItem}
                 />
             </main>
         </div>
