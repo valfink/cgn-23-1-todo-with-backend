@@ -13,6 +13,7 @@ type TodoBoardProps = {
 export default function TodoBoard(props: TodoBoardProps) {
     const todoItems = props.items
         .map(i => <TodoCard
+            key={i.id}
             item={i}
             advanceOrDeleteItem={props.advanceOrDeleteItem}
             setEditItem={props.setEditItem}

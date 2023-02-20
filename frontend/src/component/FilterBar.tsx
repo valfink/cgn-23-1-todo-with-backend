@@ -20,6 +20,7 @@ export default function FilterBar(props: FilterBarProps) {
     const filterButtons = props.buttons
         .map(b =>
             <button
+                key={"filterButton-"+b.filterValue}
                 className={"filter-button " + (b.filterValue === props.currenFilter ? "selected" : "")}
                 data-filter={b.filterValue}
                 onClick={handleButtonClick}

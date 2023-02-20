@@ -86,6 +86,7 @@ function App() {
     const todoBoards = Object.values(todoStatus)
         .filter(status => boardFilter ? status.jsonValue === boardFilter : true)
         .map(status => <TodoBoard
+            key={"board" + status.jsonValue}
             boardName={status.displayText}
             items={items.filter(item => item.status === status.jsonValue)}
             advanceOrDeleteItem={advanceOrDeleteItem}
