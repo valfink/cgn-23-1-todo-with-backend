@@ -26,7 +26,7 @@ function App() {
 
     function postNewItem(item: NewTodoItem) {
         console.log("Posting new item...");
-        axios.post("/api/todo", item)
+        return axios.post("/api/todo", item)
             .then(response => setItems(prevState => [...prevState, response.data]))
             // .then(fetchItems)
             .catch(console.error);

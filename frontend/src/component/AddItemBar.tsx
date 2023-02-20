@@ -3,7 +3,7 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {NewTodoItem} from "../model/TodoItem";
 
 type AddItemBarProps = {
-    onSubmit: (item: NewTodoItem) => void
+    onSubmit: (item: NewTodoItem) => Promise<void>
 }
 
 export default function AddItemBar(props: AddItemBarProps) {
@@ -19,8 +19,8 @@ export default function AddItemBar(props: AddItemBarProps) {
             description: description,
             status: "OPEN"
         }
-        props.onSubmit(item);
-        setDescription("");
+        props.onSubmit(item)
+            .then(() => setDescription(""));
     }
 
     return (
