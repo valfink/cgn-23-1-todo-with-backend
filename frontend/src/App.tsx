@@ -3,11 +3,11 @@ import './App.css';
 import Header from "./component/Header";
 import FilterBar from "./component/FilterBar";
 import {ServerStatus, todoStatus} from "./model/TodoStatus";
-import TodoBoard from "./component/TodoBoard";
 import {TodoItem} from "./model/TodoItem";
 import AddItemBar from "./component/AddItemBar";
 import DetailsAndEditModal from "./component/DetailsAndEditModal";
 import useTodos from "./hook/useTodos";
+import TodoBoards from "./component/TodoBoards";
 
 function App() {
     const [boardFilter, setBoardFilter] = useState<ServerStatus | undefined>(undefined);
@@ -38,17 +38,6 @@ function App() {
         }));
     filterButtons.unshift({value: "All", filterValue: undefined})
 
-    // static props
-    const todoBoards = Object.values(todoStatus)
-        .filter(status => boardFilter ? status.jsonValue === boardFilter : true)
-        .map(status => <TodoBoard
-            key={"board" + status.jsonValue}
-            boardName={status.displayText}
-            items={todoItems.filter(item => item.status === status.jsonValue)}
-            advanceOrDeleteItem={advanceOrDeleteTodo}
-            setEditItem={setEditTodo}
-            setViewItemDetails={setViewTodoDetails}/>)
-
     return (
         <div className="App">
             <Header/>
@@ -58,14 +47,21 @@ function App() {
                         item={selectedItem}
                         action={modalAction}
                         closeModal={closeModal}
-                        updateItem={updateTodo} />}
+                        updateItem={updateTodo}
+                    />}
                 <FilterBar
                     buttons={filterButtons}
                     currenFilter={boardFilter}
                     changeFilter={setBoardFilter}
                 />
                 <section className={"board-container"}>
-                    {todoBoards}
+                    <TodoBoards
+                        todoItems={todoItems}
+                        boardFilter={boardFilter}
+                        advanceOrDeleteTodo={advanceOrDeleteTodo}
+                        setEditTodo={setEditTodo}
+                        setViewTodoDetails={setViewTodoDetails}
+                    />
                 </section>
                 <AddItemBar
                     onSubmit={postNewTodo}
