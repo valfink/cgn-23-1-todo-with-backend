@@ -4,7 +4,6 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {ServerStatus, todoStatus} from "../model/TodoStatus";
 
 type DetailsAndEditModalProps = {
-    // FIXME: Cannot leave out the "undefined"
     item: TodoItem | undefined,
     action: "edit" | "details",
     closeModal(): void,
@@ -14,6 +13,10 @@ type DetailsAndEditModalProps = {
 export default function DetailsAndEditModal(props: DetailsAndEditModalProps) {
     const [newDescription, setNewDescription] = useState(props.item?.description);
     const [newStatus, setNewStatus] = useState(props.item?.status);
+
+    if (props.item === undefined) {
+        return <div>No item defined!</div>
+    }
 
     function handleDescriptionChange(e: ChangeEvent<HTMLInputElement>) {
         setNewDescription(e.target.value);
@@ -27,7 +30,7 @@ export default function DetailsAndEditModal(props: DetailsAndEditModalProps) {
         e.preventDefault();
         const newItem: TodoItem = {
             id: props.item?.id,
-            // FIXME: Have to typecast everything because of line 8 :(
+            // FIXME: Have to typecast everything because of line 7 :(
             description: newDescription as string,
             status: newStatus as ServerStatus,
         }

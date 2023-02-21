@@ -1,76 +1,33 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import Header from "./component/Header";
 import FilterBar from "./component/FilterBar";
 import {ServerStatus, todoStatus} from "./model/TodoStatus";
 import TodoBoard from "./component/TodoBoard";
-import {NewTodoItem, TodoItem} from "./model/TodoItem";
+import {TodoItem} from "./model/TodoItem";
 import AddItemBar from "./component/AddItemBar";
-import axios from "axios";
 import DetailsAndEditModal from "./component/DetailsAndEditModal";
+import useTodos from "./hook/useTodos";
 
 function App() {
-    const [items, setItems] = useState<TodoItem[]>([]);
     const [boardFilter, setBoardFilter] = useState<ServerStatus | undefined>(undefined);
     const [selectedItem, setSelectedItem] = useState<TodoItem | undefined>(undefined);
     const [modalAction, setModalAction] = useState<"details" | "edit">("details");
 
-    function fetchItems() {
-        console.log("Fetching items...");
-        axios.get("/api/todo")
-            .then(response => {
-                setItems(response.data);
-            })
-            .catch(console.error);
-    }
+    const {todoItems, postNewTodo, advanceOrDeleteTodo, updateTodo} = useTodos();
 
-    function postNewItem(item: NewTodoItem) {
-        console.log("Posting new item...");
-        return axios.post("/api/todo", item)
-            .then(response => setItems(prevState => [...prevState, response.data]))
-            // .then(fetchItems)
-            .catch(console.error);
-    }
-
-    function advanceOrDeleteItem(item: TodoItem) {
-        if (todoStatus[item.status].hasNexStatus) {
-            const advancedItem: TodoItem = {
-                ...item,
-                status: todoStatus[item.status].nextStatus
-            }
-            console.log("Advancing item...");
-            axios.put("/api/todo/" + item.id, advancedItem)
-                .then(response => setItems(prevState =>
-                    prevState.map(oldItem =>
-                        oldItem.id === item.id ? response.data : oldItem)))
-                // .then(fetchItems)
-                .catch(console.error);
-        } else {
-            console.log("Deleting item...");
-            axios.delete("/api/todo/" + item.id)
-                .then(fetchItems)
-                .catch(console.error);
-        }
-    }
-
-    function setEditItem(item: TodoItem) {
+    function setEditTodo(item: TodoItem) {
         setModalAction("edit");
         setSelectedItem(item);
     }
 
-    function setViewItemDetails(item: TodoItem) {
+    function setViewTodoDetails(item: TodoItem) {
         setModalAction("details");
         setSelectedItem(item);
     }
 
     function closeModal() {
         setSelectedItem(undefined);
-    }
-
-    function updateItem(item: TodoItem) {
-        axios.put("/api/todo/" + item.id, item)
-            .then(fetchItems)
-            .catch(console.error);
     }
 
     // static mock props, will eventually become state!
@@ -87,12 +44,10 @@ function App() {
         .map(status => <TodoBoard
             key={"board" + status.jsonValue}
             boardName={status.displayText}
-            items={items.filter(item => item.status === status.jsonValue)}
-            advanceOrDeleteItem={advanceOrDeleteItem}
-            setEditItem={setEditItem}
-            setViewItemDetails={setViewItemDetails}/>)
-
-    useEffect(fetchItems, []);
+            items={todoItems.filter(item => item.status === status.jsonValue)}
+            advanceOrDeleteItem={advanceOrDeleteTodo}
+            setEditItem={setEditTodo}
+            setViewItemDetails={setViewTodoDetails}/>)
 
     return (
         <div className="App">
@@ -103,7 +58,7 @@ function App() {
                         item={selectedItem}
                         action={modalAction}
                         closeModal={closeModal}
-                        updateItem={updateItem} />}
+                        updateItem={updateTodo} />}
                 <FilterBar
                     buttons={filterButtons}
                     currenFilter={boardFilter}
@@ -113,7 +68,7 @@ function App() {
                     {todoBoards}
                 </section>
                 <AddItemBar
-                    onSubmit={postNewItem}
+                    onSubmit={postNewTodo}
                 />
             </main>
         </div>
